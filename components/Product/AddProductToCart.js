@@ -12,10 +12,20 @@ function AddProductToCart({ user, productId }) {
   const [success, setSuccess] = React.useState(false);
   const router = useRouter()
 
+  React.useEffect(() => {
+    let timeout;
+    if(success){
+      timeout = setTimeout(() => setSuccess(false), 2000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    }
+  },[success]);
+
   async function handleAddProductToCart(){
     try{
       setLoading(true);
-      const url = `${baseUrcartl}/api/cart`
+      const url = `${baseUrl}/api/cart`
       const payload = { quantity, productId }
       const token = cookie.get('token')
       const headers = { headers: { Authorization: token }}
@@ -28,7 +38,8 @@ function AddProductToCart({ user, productId }) {
     }
 
   }
-  return <Input
+  return (
+    <Input
     type="number"
     min="1"
     value = {quantity}
@@ -39,7 +50,7 @@ function AddProductToCart({ user, productId }) {
           color:'blue',
           content: 'Item added!',
           icon: "plus cart",
-          diseable: true
+          diseabled: true
       } :
       user ?{ 
       color: 'orange',
@@ -50,11 +61,12 @@ function AddProductToCart({ user, productId }) {
       onClick: handleAddProductToCart
     }:{
       color:'blue',
-      content:'Sign up to Purchase',
+      content:'Sign up',
       icon: 'signup',
       onClick: () => router.push('/signup')
     }}
-  />;
+  
+  />);
 }
 
 export default AddProductToCart;

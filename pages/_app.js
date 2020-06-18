@@ -27,8 +27,8 @@ class MyApp extends App {
         const url = `${baseUrl}/api/account`
         const response = await axios.get(url, payload);
         const user = response.data
-        const isRoot= user.role === 'root'
-        const isAdmin= user.role === 'admin'
+        const isRoot = user.role === 'root'
+        const isAdmin = user.role === 'admin'
         // if authenticated but not of rôle admin or root
         // redirect from create page
         const isNotPermitted = !(isRoot || isAdmin) && ctx.pathname === '/create';
@@ -54,7 +54,7 @@ class MyApp extends App {
 
   syncLogout = event => {
     if(event.key === 'logout'){
-      console.log("Log out from Storage");
+      console.log("Logged out from Storage");
       
       Router.push('/login');
     }

@@ -17,10 +17,12 @@ function ProductAttributes({ description, _id, user }) {
     await axios.delete(url, payload);
     router.push('/');
   }
-  return <>
+  return (
+    <>
     <Header as="h3">About this Product</Header>
     <p>{description}</p>
-    {isRootOrAdmin && <>
+    {isRootOrAdmin && 
+      <>
     <Button 
       icon='trash alternate outline'
       color = "red"
@@ -47,7 +49,8 @@ function ProductAttributes({ description, _id, user }) {
       </Modal.Actions>
     </Modal>
     </>}
-  </>;
+  </>
+  );
 }
 
 export default ProductAttributes;
