@@ -1,15 +1,26 @@
-import { Header, Segment, Button, Icon, Item, Message } from 'semantic-ui-react';
+import React from "react";
+import {
+  Header,
+  Segment,
+  Button,
+  Icon,
+  Item,
+  Message
+} from "semantic-ui-react";
 
-import { useRouter, Router } from 'next/router';
+import { useRouter } from "next/router";
 
-function CartItemList({ products, user, handleRemoveFromCart, success }) {
+function CartItemList({ products = [], user, handleRemoveFromCart, success }) {
   const route = useRouter();
 
-  function mapCartProductsToItems(products){
+  function mapCartProductsToItems(products) {
     return products.map(p => ({
       childKey: p.product._id,
       header: (
-        <Item.Header as="a" onClick={() => route.push(`/product?_id=${p.product._id}`)}>
+        <Item.Header
+          as="a"
+          onClick={() => route.push(`/product?_id=${p.product._id}`)}
+        >
           {p.product.name}
         </Item.Header>
       ),
@@ -17,18 +28,17 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
       meta: `${p.quantity} x ${p.product.price}`,
       fluid: "true",
       extra: (
-        <Button 
+        <Button
           basic
-          icon= "remove"
+          icon="remove"
           floated="right"
-          onClick={() => handleRemoveFromCart(p.product._id)
-          }
+          onClick={() => handleRemoveFromCart(p.product._id)}
         />
       )
-    }))
+    }));
   }
 
-  if(success){
+  if (success) {
     return (
       <Message
         success
@@ -36,10 +46,10 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
         content="Your Order and Payment has been accepted"
         icon="star outline"
       />
-    )
+    );
   }
 
-  if(products.length === 0){
+  if (products.length === 0) {
     return (
       <Segment secondary color="teal" inverted textAlign="center" placeholder>
         <Header>
@@ -48,21 +58,20 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
         </Header>
         <div>
           {user ? (
-            <Button color="orange" onClick={() => route.push('/')}>
+            <Button color="orange" onClick={() => route.push("/")}>
               View Products
             </Button>
-          )
-          :(
-            <Button color="blue" onClick={() => route.push('/login')}>
+          ) : (
+            <Button color="blue" onClick={() => route.push("/login")}>
               Login to Add Products
             </Button>
           )}
         </div>
       </Segment>
-    )
+    );
   }
 
-  return <Item.Group divided items={mapCartProductsToItems(products)} />
+  return <Item.Group divided items={mapCartProductsToItems(products)} />;
 }
 
 export default CartItemList;
