@@ -33,7 +33,7 @@ function AccountOrders({ orders }) {
               />
             </List.Header>
             <List>
-              {order.products.map(p => {
+              {order.products.map(p => (
                 <List.Item key={p.product._id}>
                   <Image avatar src={p.product.mediaUrl} />
                   <List.Content>
@@ -47,8 +47,8 @@ function AccountOrders({ orders }) {
                       {p.product.sku}
                     </Label>
                   </List.Content>
-                </List.Item>;
-              })}
+                </List.Item>
+              ))}
             </List>
           </>
         )
